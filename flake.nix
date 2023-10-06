@@ -39,13 +39,13 @@
 
           src = pkgs.fetchzip {
             url = "https://senamirmir.com/senamirmir2023/assets/dist/SenamirmirLeTewahedo-${version}.zip";
-            sha256 = "";
+            sha256 = "sha256-xMiwznDRJzU470Q3P6VBScrEfi9kC/U2p5csakJAnEc=";
             stripRoot = false;
           };
 
           installPhase = ''
             mkdir -p $out/share/fonts/truetype/
-            cp $src/*.ttf $out/share/fonts/truetype/
+            cp $src/ttf/*.ttf $out/share/fonts/truetype/
           '';
 
           meta = { description = "The senamirmir fonts collection"; };
