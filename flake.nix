@@ -10,13 +10,9 @@
     fu.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
-      in
-      with pkgs;
-      {
-        formatter = nixpkgs-fmt;
 
-        packages.default = pkgs.stdenvNoCC.mkDerivation rec {
-          name = "senamirmir";
+        Senamirmir = pkgs.stdenvNoCC.mkDerivation rec {
+          pname = "senamirmir";
           version = "5.1";
 
           dontConfigure = true;
@@ -34,6 +30,32 @@
 
           meta = { description = "The senamirmir fonts collection"; };
         };
+
+        LeTewahedo = pkgs.stdenvNoCC.mkDerivation rec {
+          pname = "LeTewahedo";
+          version = "1.0";
+
+          dontConfigure = true;
+
+          src = pkgs.fetchzip {
+            url = "https://senamirmir.com/senamirmir2023/assets/dist/SenamirmirLeTewahedo-${version}.zip";
+            sha256 = "";
+            stripRoot = false;
+          };
+
+          installPhase = ''
+            mkdir -p $out/share/fonts/truetype/
+            cp $src/*.ttf $out/share/fonts/truetype/
+          '';
+
+          meta = { description = "The senamirmir fonts collection"; };
+        };
+      in
+      with pkgs;
+      {
+        formatter = nixpkgs-fmt;
+
+        packages = { inherit LeTewahedo Senamirmir; };
       }
     );
 }
